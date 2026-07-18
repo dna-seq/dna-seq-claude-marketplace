@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "dna-seq",
+  "owner": {
+    "name": "DNA Seq"
+  },
+  "description": "Research-use genomic analysis and annotation capabilities for Claude Code.",
+  "plugins": [
+    {
+      "name": "just-prs",
+      "description": "Search the PGS Catalog, compute polygenic risk scores, and produce evidence-aware trait interpretations.",
+      "source": {
+        "source": "github",
+        "repo": "dna-seq/just-prs-mcp"
+      },
+      "homepage": "https://github.com/dna-seq/just-prs-mcp",
+      "repository": "https://github.com/dna-seq/just-prs-mcp",
+      "license": "MIT",
+      "category": "genomics",
+      "tags": ["genomics", "polygenic-risk-score", "pgs-catalog", "bioinformatics"]
+    },
+    {
+      "name": "just-dna-agents",
+      "description": "Create, validate, and compile research-use genetics annotation modules from papers and variant evidence.",
+      "source": {
+        "source": "github",
+        "repo": "dna-seq/just-dna-agents"
+      },
+      "homepage": "https://github.com/dna-seq/just-dna-agents",
+      "repository": "https://github.com/dna-seq/just-dna-agents",
+      "license": "MIT",
+      "category": "genomics",
+      "tags": ["genomics", "variant-annotation", "pharmacogenomics", "bioinformatics"]
+    }
+  ]
+}

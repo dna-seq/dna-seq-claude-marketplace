@@ -1,0 +1,22 @@
+# Operating-system and editor state
+.DS_Store
+.idea/
+.vscode/
+
+# Claude Code local state
+.claude/settings.local.json
+
+# Local validation environments and reports
+.venv/
+__pycache__/
+.pytest_cache/
+*.py[cod]
+coverage.xml
+htmlcov/
+
+# Build artifacts and local secrets
+dist/
+build/
+*.egg-info/
+.env
+.env.*
