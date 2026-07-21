@@ -1,60 +1,124 @@
-# DNA Seq Claude Code Marketplace
+# DNA Seq Genomics Marketplace
 
-Install research-use genomics capabilities for Claude Code from one catalog.
-Each plugin remains independently versioned and ships its own MCP server,
-skills, and safety guidance.
+Give Claude and Codex focused, research-use genomics capabilities from one
+catalog. Start with a gene or variant in Ensembl, investigate published
+polygenic-score models, or score a local genome while keeping the evidence and
+limitations visible.
 
-## Install
+Each plugin is independently versioned. Its source repository owns the MCP
+runtime, skills, tests, and safety guidance; this repository provides discovery
+for both Claude and Codex.
+
+## Choose a plugin
+
+- **`ensembl`** looks up genes, transcripts, proteins, variants, population
+  frequencies, phenotypes, genomic regions, and Refget sequences. It sends
+  lookup identifiers and coordinates to public Ensembl services.
+- **`just-prs`** searches the PGS Catalog, compares models, scores a local VCF,
+  assesses coverage, and interprets model agreement. It runs locally by
+  default; personal genome files are not uploaded.
+- **`just-dna-agents`** researches, validates, and compiles genetics annotation
+  modules. It remains Claude-only while its broader dependency model is
+  designed separately.
+
+`ensembl` and `just-prs` are available in both catalogs. They complement one
+another but are not coupled: Ensembl explains individual loci and biological
+consequences, while just-prs evaluates aggregate predisposition across many
+variants.
+
+## Configure Claude Code
+
+Register the marketplace once, then install either or both plugins:
 
 ```bash
 claude plugin marketplace add dna-seq/dna-seq-claude-marketplace
+claude plugin install ensembl@dna-seq
 claude plugin install just-prs@dna-seq
+```
+
+The existing Claude-only module-authoring plugin is optional:
+
+```bash
 claude plugin install just-dna-agents@dna-seq
 ```
 
-Use `claude plugin update` to receive newer plugin releases, or inspect
-installed plugins with `claude plugin list`.
+Inspect installed plugins with `claude plugin list`. Use
+`claude plugin update ensembl@dna-seq` or
+`claude plugin update just-prs@dna-seq` to receive a newer release.
 
-## Available plugins
+## Configure Codex Desktop
 
-| Plugin | Purpose | Runtime |
-| --- | --- | --- |
-| `just-prs` | PGS Catalog search, local polygenic-score computation, quality assessment, and evidence-aware trait interpretation. | `just-prs-mcp` from PyPI via `uvx` |
-| `just-dna-agents` | Genetics annotation-module research, validation, and compilation. | `just-dna-agents-mcp` from PyPI via `uvx` |
+Codex Desktop discovers repository marketplaces from
+`.agents/plugins/marketplace.json`.
 
-The plugins are complementary but independent. `just-prs` analyzes a local
-genome with published PGS models. `just-dna-agents` authors deployable
-annotation modules from evidence. Both are research-use tools, not medical
-advice.
+1. Clone this repository and open the checkout as a project in Codex Desktop
+   (`/usr/bin/codex-desktop` on Linux installations that use the desktop
+   package).
+2. Open **Plugins**, select **DNA Seq Genomics**, and install `ensembl`,
+   `just-prs`, or both.
+3. Start a new Codex session after enabling a plugin so its skills and MCP
+   servers load.
+
+If a Codex CLI is already installed, the equivalent marketplace registration
+is:
+
+```bash
+codex plugin marketplace add dna-seq/dna-seq-claude-marketplace
+```
+
+The CLI is optional; do not install a second Codex distribution just for this
+marketplace.
+
+## Try it
+
+With Ensembl:
+
+```text
+Tell me about BRCA2 and identify its MANE Select transcript.
+What is rs699? Include population frequencies and predicted consequences.
+Convert rs28934578 to genomic, coding, and protein HGVS forms.
+```
+
+With just-prs:
+
+```text
+Search for well-supported type 2 diabetes scores and compare their evidence.
+Explain what information is needed before a PRS percentile is meaningful.
+Compute PRS for this local VCF and report coverage, ancestry assumptions,
+model agreement, and uncertainty.
+```
+
+PRS is genetic predisposition, not a diagnosis or a measurement of current
+health. Results depend on model quality, variant coverage, and ancestry match.
+All plugins are for research and education, not medical advice.
 
 ## Development and validation
 
-This repository is a Claude Code marketplace catalog, not a Python package, so
-it deliberately has no empty `pyproject.toml` or uv environment. Each listed
-plugin owns its Python/uv runtime and dependency lockfiles.
+This is a catalog, not a Python package. Each plugin repository owns its
+Python/uv environment and lockfile.
 
-Validate the catalog with Claude Code:
+Validate the Claude marketplace and test local plugin source trees:
 
 ```bash
 claude plugin validate .
+claude --plugin-dir ../ensembl-mcp
+claude --plugin-dir ../just-prs-mcp
 ```
 
-Test installation from a local checkout:
+For Codex Desktop, open this checkout and confirm both entries appear under
+**DNA Seq Genomics**. Because Git-backed entries resolve their published
+branches, use each plugin repository's own tests to verify uncommitted source
+changes before publishing.
 
-```bash
-claude plugin marketplace add . --scope local
-claude plugin install just-prs@dna-seq --scope local
-```
+## Add or update a plugin
 
-## Add a plugin
+1. Keep the Claude manifest and MCP config in the plugin repository.
+2. For Codex, provide `.codex-plugin/plugin.json` and a referenced MCP config.
+3. Launch published Python runtimes through a version-pinned `uvx` command.
+4. Update the appropriate catalog:
+   `.claude-plugin/marketplace.json`, `.agents/plugins/marketplace.json`, or
+   both.
+5. Validate both manifests and run the plugin repository's tests.
 
-1. Ensure the source repository contains a valid
-   `.claude-plugin/plugin.json`.
-2. Ensure its MCP configuration launches a published, versioned package (for
-   Python tools, normally through `uvx`).
-3. Add an entry to `.claude-plugin/marketplace.json` using a GitHub source.
-4. Run `claude plugin validate .`.
-
-Plugin sources may live in a different repository than this catalog. Keep
-plugin manifests and versions in the source repository; this marketplace is
-only the discovery and installation index.
+Plugin versions remain in their source repositories; this marketplace is only
+the discovery and installation index.

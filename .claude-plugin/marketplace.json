@@ -7,6 +7,19 @@
   "description": "Research-use genomic analysis and annotation capabilities for Claude Code.",
   "plugins": [
     {
+      "name": "ensembl",
+      "description": "Query live Ensembl genes, variants, population frequencies, phenotypes, proteins, and GA4GH Refget sequences.",
+      "source": {
+        "source": "github",
+        "repo": "dna-seq/ensembl-mcp"
+      },
+      "homepage": "https://github.com/dna-seq/ensembl-mcp",
+      "repository": "https://github.com/dna-seq/ensembl-mcp",
+      "license": "MIT",
+      "category": "genomics",
+      "tags": ["genomics", "ensembl", "variants", "bioinformatics"]
+    },
+    {
       "name": "just-prs",
       "description": "Search the PGS Catalog, compute polygenic risk scores, and produce evidence-aware trait interpretations.",
       "source": {
