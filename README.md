@@ -42,9 +42,25 @@ The existing Claude-only module-authoring plugin is optional:
 claude plugin install just-dna-agents@dna-seq
 ```
 
-Inspect installed plugins with `claude plugin list`. Use
-`claude plugin update ensembl@dna-seq` or
-`claude plugin update just-prs@dna-seq` to receive a newer release.
+Inspect installed plugins with `claude plugin list`.
+
+### Updating
+
+Each plugin is versioned in its own repository, so installing once does not
+track new releases automatically — refresh the catalog, then update the
+plugin itself:
+
+```bash
+claude plugin marketplace update dna-seq   # refresh the catalog (this repo)
+claude plugin update ensembl@dna-seq       # pull the plugin's latest release
+claude plugin update just-prs@dna-seq
+```
+
+`claude plugin marketplace update` refreshes `marketplace.json` (e.g. a new
+plugin was added, or one was renamed); `claude plugin update <plugin>` pulls
+that plugin's own source to its latest commit/release. Restart Claude Code
+(or start a new session) afterward so the updated version loads — run
+`claude plugin list` to confirm what is currently installed.
 
 ## Configure Codex Desktop
 
@@ -68,6 +84,25 @@ codex plugin marketplace add dna-seq/dna-seq-claude-marketplace
 
 The CLI is optional; do not install a second Codex distribution just for this
 marketplace.
+
+### Updating
+
+Codex Desktop reads the marketplace from your local checkout, so pick it up
+with a normal pull, then restart:
+
+```bash
+cd dna-seq-claude-marketplace
+git pull
+```
+
+Restart Codex Desktop (or start a new session) so it re-reads
+`.agents/plugins/marketplace.json` and re-resolves each plugin's `ref: main`
+source. With the Codex CLI, the equivalent is:
+
+```bash
+codex plugin marketplace update dna-seq
+codex plugin update just-prs@dna-seq
+```
 
 ## Try it
 
