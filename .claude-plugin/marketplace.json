@@ -33,8 +33,21 @@
       "tags": ["genomics", "polygenic-risk-score", "pgs-catalog", "bioinformatics"]
     },
     {
+      "name": "just-module-creator",
+      "description": "Author, validate, compile, and publish just-dna annotation modules, with schema answers generated from the live just-dna-format models and literature search across PubMed, Europe PMC, Semantic Scholar, and preprints.",
+      "source": {
+        "source": "github",
+        "repo": "dna-seq/just-module-creator"
+      },
+      "homepage": "https://github.com/dna-seq/just-module-creator",
+      "repository": "https://github.com/dna-seq/just-module-creator",
+      "license": "MIT",
+      "category": "genomics",
+      "tags": ["genomics", "annotation", "just-dna", "variants", "pharmacogenomics", "literature", "bioinformatics"]
+    },
+    {
       "name": "just-dna-agents",
-      "description": "Create, validate, and compile research-use genetics annotation modules from papers and variant evidence.",
+      "description": "Research, validate, and compile genetics annotation modules with evidence-aware genomics workflows.",
       "source": {
         "source": "github",
         "repo": "dna-seq/just-dna-agents"
@@ -43,7 +56,7 @@
       "repository": "https://github.com/dna-seq/just-dna-agents",
       "license": "MIT",
       "category": "genomics",
-      "tags": ["genomics", "variant-annotation", "pharmacogenomics", "bioinformatics"]
+      "tags": ["genomics", "variant-annotation", "pharmacogenomics", "polygenic-score", "bioinformatics"]
     }
   ]
 }

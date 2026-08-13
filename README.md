@@ -2,8 +2,9 @@
 
 Give Claude and Codex focused, research-use genomics capabilities from one
 catalog. Start with a gene or variant in Ensembl, investigate published
-polygenic-score models, or score a local genome while keeping the evidence and
-limitations visible.
+polygenic-score models, score a local genome while keeping the evidence and
+limitations visible, or author and publish a just-dna annotation module of your
+own.
 
 Each plugin is independently versioned. Its source repository owns the MCP
 runtime, skills, tests, and safety guidance; this repository provides discovery
@@ -17,14 +18,23 @@ for both Claude and Codex.
 - **`just-prs`** searches the PGS Catalog, compares models, scores a local VCF,
   assesses coverage, and interprets model agreement. It runs locally by
   default; personal genome files are not uploaded.
-- **`just-dna-agents`** researches, validates, and compiles genetics annotation
-  modules. It remains Claude-only while its broader dependency model is
-  designed separately.
+- **`just-module-creator`** authors just-dna annotation modules: scaffold the
+  tables, draft rows from ClinVar, find and check the literature behind each
+  row, lint, validate, compile to parquet, and publish to the module registry.
+  Its schema answers are generated from the live `just-dna-format` models, so
+  they cannot drift from what the compiler accepts. Requires `uv` and Python
+  3.13 or newer; the server boots with nothing configured, and only publishing
+  needs a registry account.
+- **`just-dna-agents`** is the earlier agent-and-command suite for the same
+  annotation work. Prefer `just-module-creator` for authoring a module today;
+  install `just-dna-agents` if you specifically want its subagents and slash
+  commands.
 
 `ensembl` and `just-prs` are available in both catalogs. They complement one
 another but are not coupled: Ensembl explains individual loci and biological
 consequences, while just-prs evaluates aggregate predisposition across many
-variants.
+variants. `just-module-creator` and `just-dna-agents` remain Claude-only —
+neither ships a `.codex-plugin` manifest yet.
 
 ## Configure Claude Code
 
@@ -36,11 +46,16 @@ claude plugin install ensembl@dna-seq
 claude plugin install just-prs@dna-seq
 ```
 
-The existing Claude-only module-authoring plugin is optional:
+The Claude-only module-authoring plugins are optional:
 
 ```bash
+claude plugin install just-module-creator@dna-seq
 claude plugin install just-dna-agents@dna-seq
 ```
+
+`just-module-creator` launches its MCP server with
+`uv run --project ${CLAUDE_PLUGIN_ROOT}`, so `uv` must be on PATH;
+dependencies install on first use.
 
 Inspect installed plugins with `claude plugin list`.
 
@@ -54,6 +69,7 @@ plugin itself:
 claude plugin marketplace update dna-seq   # refresh the catalog (this repo)
 claude plugin update ensembl@dna-seq       # pull the plugin's latest release
 claude plugin update just-prs@dna-seq
+claude plugin update just-module-creator@dna-seq
 ```
 
 `claude plugin marketplace update` refreshes `marketplace.json` (e.g. a new
@@ -123,6 +139,17 @@ Compute PRS for this local VCF and report coverage, ancestry assumptions,
 model agreement, and uncertainty.
 ```
 
+With just-module-creator:
+
+```text
+Which table kind does a CYP2C19 metabolizer finding belong in, and what does
+that table require?
+Scaffold a module for APOE variants and draft its rows from ClinVar.
+Find the papers behind this row and check that the PMID names the one I mean.
+Validate and compile this module in strict mode, then tell me whether it would
+publish.
+```
+
 PRS is genetic predisposition, not a diagnosis or a measurement of current
 health. Results depend on model quality, variant coverage, and ancestry match.
 All plugins are for research and education, not medical advice.
@@ -138,6 +165,7 @@ Validate the Claude marketplace and test local plugin source trees:
 claude plugin validate .
 claude --plugin-dir ../ensembl-mcp
 claude --plugin-dir ../just-prs-mcp
+claude --plugin-dir ../just-module-creator
 ```
 
 For Codex Desktop, open this checkout and confirm both entries appear under
