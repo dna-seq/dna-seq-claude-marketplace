@@ -25,10 +25,11 @@ for both Claude and Codex.
   they cannot drift from what the compiler accepts. Requires `uv` and Python
   3.13 or newer; the server boots with nothing configured, and only publishing
   needs a registry account.
-- **`just-dna-agents`** is the earlier agent-and-command suite for the same
-  annotation work. Prefer `just-module-creator` for authoring a module today;
-  install `just-dna-agents` if you specifically want its subagents and slash
-  commands.
+- **`just-dna-agents`** wraps the same annotation work in subagents and slash
+  commands. It is not retired and is not a competitor: the likely direction is
+  that it grows into the wider toolkit and re-exposes `just-module-creator`
+  underneath. Until that lands, reach for `just-module-creator` to author a
+  module, and for `just-dna-agents` when you want its agents and commands.
 
 `ensembl` and `just-prs` are available in both catalogs. They complement one
 another but are not coupled: Ensembl explains individual loci and biological
@@ -38,7 +39,7 @@ neither ships a `.codex-plugin` manifest yet.
 
 ## Configure Claude Code
 
-Register the marketplace once, then install either or both plugins:
+Register the marketplace once, then install whichever plugins you need:
 
 ```bash
 claude plugin marketplace add dna-seq/dna-seq-claude-marketplace
