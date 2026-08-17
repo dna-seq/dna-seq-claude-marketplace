@@ -31,11 +31,12 @@ for both Claude and Codex.
   underneath. Until that lands, reach for `just-module-creator` to author a
   module, and for `just-dna-agents` when you want its agents and commands.
 
-`ensembl` and `just-prs` are available in both catalogs. They complement one
-another but are not coupled: Ensembl explains individual loci and biological
-consequences, while just-prs evaluates aggregate predisposition across many
-variants. `just-module-creator` and `just-dna-agents` remain Claude-only —
-neither ships a `.codex-plugin` manifest yet.
+All four plugins are available in both catalogs. Ensembl explains individual
+loci and biological consequences, while just-prs evaluates aggregate
+predisposition across many variants. The two module-authoring plugins now ship
+native Codex manifests as well: `just-module-creator` exposes its existing
+authoring and evidence skills, and `just-dna-agents` includes a Codex
+`create-module` workflow backed by its compiler and BioContext KB.
 
 ## Configure Claude Code
 
@@ -87,16 +88,23 @@ Codex Desktop discovers repository marketplaces from
 1. Clone this repository and open the checkout as a project in Codex Desktop
    (`/usr/bin/codex-desktop` on Linux installations that use the desktop
    package).
-2. Open **Plugins**, select **DNA Seq Genomics**, and install `ensembl`,
-   `just-prs`, or both.
+2. Open **Plugins**, select **DNA Seq Genomics**, and install any of `ensembl`,
+   `just-prs`, `just-module-creator`, or `just-dna-agents`.
 3. Start a new Codex session after enabling a plugin so its skills and MCP
    servers load.
+
+For guided module authoring, install `just-dna-agents` and select
+`create-module` from Codex's skill or slash-command picker. Install
+`just-module-creator` when you want its broader authoring, validation,
+publishing, and literature-search toolchain.
 
 If a Codex CLI is already installed, the equivalent marketplace registration
 is:
 
 ```bash
 codex plugin marketplace add dna-seq/dna-seq-claude-marketplace
+codex plugin add just-module-creator@dna-seq
+codex plugin add just-dna-agents@dna-seq
 ```
 
 The CLI is optional; do not install a second Codex distribution just for this
@@ -119,6 +127,8 @@ source. With the Codex CLI, the equivalent is:
 ```bash
 codex plugin marketplace update dna-seq
 codex plugin update just-prs@dna-seq
+codex plugin update just-module-creator@dna-seq
+codex plugin update just-dna-agents@dna-seq
 ```
 
 ## Try it
@@ -169,7 +179,7 @@ claude --plugin-dir ../just-prs-mcp
 claude --plugin-dir ../just-module-creator
 ```
 
-For Codex Desktop, open this checkout and confirm both entries appear under
+For Codex Desktop, open this checkout and confirm all four entries appear under
 **DNA Seq Genomics**. Because Git-backed entries resolve their published
 branches, use each plugin repository's own tests to verify uncommitted source
 changes before publishing.
