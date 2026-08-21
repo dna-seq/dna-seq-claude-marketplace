@@ -20,23 +20,28 @@ for both Claude and Codex.
   default; personal genome files are not uploaded.
 - **`just-module-creator`** authors just-dna annotation modules: scaffold the
   tables, draft rows from ClinVar, find and check the literature behind each
-  row, lint, validate, compile to parquet, and publish to the module registry.
-  Its schema answers are generated from the live `just-dna-format` models, so
-  they cannot drift from what the compiler accepts. Requires `uv` and Python
-  3.13 or newer; the server boots with nothing configured, and only publishing
-  needs a registry account.
+  row, lint, validate, compile to parquet, and publish to the module registry
+  — or install a compiled module locally and run it against a genome without
+  publishing anywhere. Its schema answers are generated from the live
+  `just-dna-format` models, so they cannot drift from what the compiler
+  accepts. Alongside the MCP server it ships a skill per lifecycle stage and a
+  set of slash commands; `/create-module` is the entry point, routing to the
+  stage the work is actually at. Requires `uv` and Python 3.13 or newer; the
+  server boots with nothing configured, and only publishing needs a registry
+  account.
 - **`just-dna-agents`** wraps the same annotation work in subagents and slash
   commands. It is not retired and is not a competitor: the likely direction is
   that it grows into the wider toolkit and re-exposes `just-module-creator`
   underneath. Until that lands, reach for `just-module-creator` to author a
   module, and for `just-dna-agents` when you want its agents and commands.
 
-All four plugins are available in both catalogs. Ensembl explains individual
-loci and biological consequences, while just-prs evaluates aggregate
-predisposition across many variants. The two module-authoring plugins now ship
-native Codex manifests as well: `just-module-creator` exposes its existing
-authoring and evidence skills, and `just-dna-agents` includes a Codex
-`create-module` workflow backed by its compiler and BioContext KB.
+All four plugins are available in both catalogs. Ensembl and just-prs
+complement one another but are not coupled: Ensembl explains individual loci
+and biological consequences, while just-prs evaluates aggregate predisposition
+across many variants. The two module-authoring plugins now ship native Codex
+manifests as well: `just-module-creator` exposes its existing authoring and
+evidence skills, and `just-dna-agents` includes a Codex `create-module`
+workflow backed by its compiler and BioContext KB.
 
 ## Configure Claude Code
 
@@ -48,7 +53,7 @@ claude plugin install ensembl@dna-seq
 claude plugin install just-prs@dna-seq
 ```
 
-The Claude-only module-authoring plugins are optional:
+The module-authoring plugins are optional:
 
 ```bash
 claude plugin install just-module-creator@dna-seq
@@ -97,6 +102,10 @@ For guided module authoring, install `just-dna-agents` and select
 `create-module` from Codex's skill or slash-command picker. Install
 `just-module-creator` when you want its broader authoring, validation,
 publishing, and literature-search toolchain.
+
+`just-module-creator` launches through `uv run --project ${PLUGIN_ROOT}` under
+Codex exactly as it does under Claude, so the same `uv`-on-PATH requirement
+applies and dependencies install on first use.
 
 If a Codex CLI is already installed, the equivalent marketplace registration
 is:
@@ -153,12 +162,14 @@ model agreement, and uncertainty.
 With just-module-creator:
 
 ```text
+/create-module APOE variants, from these three papers
 Which table kind does a CYP2C19 metabolizer finding belong in, and what does
 that table require?
-Scaffold a module for APOE variants and draft its rows from ClinVar.
+Somebody handed me this spec directory — where does it stand and what still
+needs deciding?
 Find the papers behind this row and check that the PMID names the one I mean.
-Validate and compile this module in strict mode, then tell me whether it would
-publish.
+Validate and compile this module in strict mode, then run it against my own
+genome locally before publishing anything.
 ```
 
 PRS is genetic predisposition, not a diagnosis or a measurement of current
@@ -179,10 +190,10 @@ claude --plugin-dir ../just-prs-mcp
 claude --plugin-dir ../just-module-creator
 ```
 
-For Codex Desktop, open this checkout and confirm all four entries appear under
-**DNA Seq Genomics**. Because Git-backed entries resolve their published
-branches, use each plugin repository's own tests to verify uncommitted source
-changes before publishing.
+For Codex Desktop, open this checkout and confirm every entry in
+`.agents/plugins/marketplace.json` appears under **DNA Seq Genomics**. Because
+Git-backed entries resolve their published branches, use each plugin
+repository's own tests to verify uncommitted source changes before publishing.
 
 ## Add or update a plugin
 

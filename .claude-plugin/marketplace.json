@@ -34,7 +34,7 @@
     },
     {
       "name": "just-module-creator",
-      "description": "Author, validate, compile, and publish just-dna annotation modules, with schema answers generated from the live just-dna-format models and literature search across PubMed, Europe PMC, Semantic Scholar, and preprints.",
+      "description": "Author, validate, compile, and publish just-dna annotation modules, with schema answers generated from the live just-dna-format models and literature search across PubMed, Europe PMC, Semantic Scholar, OpenAlex, Crossref, and preprints.",
       "source": {
         "source": "github",
         "repo": "dna-seq/just-module-creator"
