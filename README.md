@@ -192,9 +192,9 @@ genome locally before publishing anything.
 With manuscript-skills:
 
 ```text
-Check this manuscript before I submit it to Bioinformatics.
-Which journals are least strict about AI for a software paper whose text Claude helped revise?
-Copy-edit the Discussion so it doesn't read as AI-written, without changing any claim.
+Check this manuscript before I submit it to my target journal.
+Rank life-science journals by how strict their AI policy is for this manuscript.
+Copy-edit this section so it doesn't read as AI-generated, without changing any claim.
 ```
 
 PRS is genetic predisposition, not a diagnosis or a measurement of current
