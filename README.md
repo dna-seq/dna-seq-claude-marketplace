@@ -34,8 +34,16 @@ for both Claude and Codex.
   that it grows into the wider toolkit and re-exposes `just-module-creator`
   underneath. Until that lands, reach for `just-module-creator` to author a
   module, and for `just-dna-agents` when you want its agents and commands.
+- **`manuscript-skills`** prepares AI-assisted manuscripts for journal
+  submission. It verifies every reference (title and first author must match;
+  retractions are flagged), finds chatbot leftovers, placeholders and missing
+  declarations, ranks journals by how strict their 2026 AI policy is for the
+  way the paper was written, adapts the manuscript to the chosen venue, and
+  copy-edits AI-sounding prose under a guard that checks no number, citation,
+  hedge or negation changed. It is not genomics-specific. Its scripts run
+  with `uv`; only reference checking uses the network.
 
-All four plugins are available in both catalogs. Ensembl and just-prs
+All five plugins are available in both catalogs. Ensembl and just-prs
 complement one another but are not coupled: Ensembl explains individual loci
 and biological consequences, while just-prs evaluates aggregate predisposition
 across many variants. The two module-authoring plugins now ship native Codex
@@ -60,6 +68,12 @@ claude plugin install just-module-creator@dna-seq
 claude plugin install just-dna-agents@dna-seq
 ```
 
+For preparing a manuscript:
+
+```bash
+claude plugin install manuscript-skills@dna-seq
+```
+
 `just-module-creator` launches its MCP server with
 `uv run --project ${CLAUDE_PLUGIN_ROOT}`, so `uv` must be on PATH;
 dependencies install on first use.
@@ -77,6 +91,7 @@ claude plugin marketplace update dna-seq   # refresh the catalog (this repo)
 claude plugin update ensembl@dna-seq       # pull the plugin's latest release
 claude plugin update just-prs@dna-seq
 claude plugin update just-module-creator@dna-seq
+claude plugin update manuscript-skills@dna-seq
 ```
 
 `claude plugin marketplace update` refreshes `marketplace.json` (e.g. a new
@@ -94,7 +109,7 @@ Codex Desktop discovers repository marketplaces from
    (`/usr/bin/codex-desktop` on Linux installations that use the desktop
    package).
 2. Open **Plugins**, select **DNA Seq Genomics**, and install any of `ensembl`,
-   `just-prs`, `just-module-creator`, or `just-dna-agents`.
+   `just-prs`, `just-module-creator`, `just-dna-agents`, or `manuscript-skills`.
 3. Start a new Codex session after enabling a plugin so its skills and MCP
    servers load.
 
@@ -114,6 +129,7 @@ is:
 codex plugin marketplace add dna-seq/dna-seq-claude-marketplace
 codex plugin add just-module-creator@dna-seq
 codex plugin add just-dna-agents@dna-seq
+codex plugin add manuscript-skills@dna-seq
 ```
 
 The CLI is optional; do not install a second Codex distribution just for this
@@ -138,6 +154,7 @@ codex plugin marketplace update dna-seq
 codex plugin update just-prs@dna-seq
 codex plugin update just-module-creator@dna-seq
 codex plugin update just-dna-agents@dna-seq
+codex plugin update manuscript-skills@dna-seq
 ```
 
 ## Try it
@@ -172,6 +189,14 @@ Validate and compile this module in strict mode, then run it against my own
 genome locally before publishing anything.
 ```
 
+With manuscript-skills:
+
+```text
+Check this manuscript before I submit it to Bioinformatics.
+Which journals are least strict about AI for a software paper whose text Claude helped revise?
+Copy-edit the Discussion so it doesn't read as AI-written, without changing any claim.
+```
+
 PRS is genetic predisposition, not a diagnosis or a measurement of current
 health. Results depend on model quality, variant coverage, and ancestry match.
 All plugins are for research and education, not medical advice.
@@ -188,6 +213,7 @@ claude plugin validate .
 claude --plugin-dir ../ensembl-mcp
 claude --plugin-dir ../just-prs-mcp
 claude --plugin-dir ../just-module-creator
+claude --plugin-dir ../manuscript-skills
 ```
 
 For Codex Desktop, open this checkout and confirm every entry in
