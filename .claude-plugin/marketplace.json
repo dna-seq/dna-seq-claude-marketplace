@@ -57,6 +57,19 @@
       "license": "MIT",
       "category": "genomics",
       "tags": ["genomics", "variant-annotation", "pharmacogenomics", "polygenic-score", "bioinformatics"]
+    },
+    {
+      "name": "manuscript-skills",
+      "description": "Prepare AI-assisted manuscripts for 2026 journal desks: verify every reference, find chatbot leftovers and missing declarations, rank journals by how strict their AI policy is for the way the paper was written, adapt the manuscript to the chosen venue, and copy-edit AI-sounding prose without changing numbers, citations or hedges.",
+      "source": {
+        "source": "github",
+        "repo": "dna-seq/manuscript-skills"
+      },
+      "homepage": "https://github.com/dna-seq/manuscript-skills",
+      "repository": "https://github.com/dna-seq/manuscript-skills",
+      "license": "MIT",
+      "category": "research",
+      "tags": ["manuscript", "publishing", "peer-review", "ai-disclosure", "references", "journals", "writing"]
     }
   ]
 }
