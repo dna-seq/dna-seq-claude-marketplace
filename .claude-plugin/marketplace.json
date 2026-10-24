@@ -57,6 +57,19 @@
       "license": "MIT",
       "category": "genomics",
       "tags": ["genomics", "variant-annotation", "pharmacogenomics", "polygenic-score", "bioinformatics"]
+    },
+    {
+      "name": "manuscript-skills",
+      "description": "Prepare a scientific manuscript for submission: check claims, numbers, references (retractions, and whether a source supports the claim) and figures as printed, simulate referees for the target journal, rank preprint servers and journals by the authors' priorities and AI policies, and edit the prose under a check that no claim got stronger and no number or citation changed. Ends with the corrected version as track changes and an offline dashboard of what the run found.",
+      "source": {
+        "source": "github",
+        "repo": "dna-seq/manuscript-skills"
+      },
+      "homepage": "https://github.com/dna-seq/manuscript-skills",
+      "repository": "https://github.com/dna-seq/manuscript-skills",
+      "license": "MIT",
+      "category": "research",
+      "tags": ["manuscript", "publishing", "peer-review", "ai-disclosure", "references", "journals", "writing"]
     }
   ]
 }
