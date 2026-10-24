@@ -34,14 +34,15 @@ for both Claude and Codex.
   that it grows into the wider toolkit and re-exposes `just-module-creator`
   underneath. Until that lands, reach for `just-module-creator` to author a
   module, and for `just-dna-agents` when you want its agents and commands.
-- **`manuscript-skills`** prepares AI-assisted manuscripts for journal
-  submission. It verifies every reference (title and first author must match;
-  retractions are flagged), finds chatbot leftovers, placeholders and missing
-  declarations, ranks journals by how strict their 2026 AI policy is for the
-  way the paper was written, adapts the manuscript to the chosen venue, and
-  copy-edits AI-sounding prose under a guard that checks no number, citation,
-  hedge or negation changed. It is not genomics-specific. Its scripts run
-  with `uv`; only reference checking uses the network.
+- **`manuscript-skills`** prepares a scientific manuscript for submission. One
+  request checks claims, numbers, references (retractions, and whether a source
+  supports the claim) and figures as they will be printed, simulates referees
+  for the target journal, ranks preprint servers and journals by the authors'
+  priorities and AI policies, and edits the prose under a script that checks no
+  claim got stronger and no number or citation changed. It ends with the
+  corrected version as track changes and an offline dashboard. It is not
+  genomics-specific. Its scripts run with `uv`; only reference and availability
+  lookups use the network.
 
 All five plugins are available in both catalogs. Ensembl and just-prs
 complement one another but are not coupled: Ensembl explains individual loci

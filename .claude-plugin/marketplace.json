@@ -60,7 +60,7 @@
     },
     {
       "name": "manuscript-skills",
-      "description": "Prepare AI-assisted manuscripts for 2026 journal desks: verify every reference, find chatbot leftovers and missing declarations, rank journals by how strict their AI policy is for the way the paper was written, adapt the manuscript to the chosen venue, and copy-edit AI-sounding prose without changing numbers, citations or hedges.",
+      "description": "Prepare a scientific manuscript for submission: check claims, numbers, references (retractions, and whether a source supports the claim) and figures as printed, simulate referees for the target journal, rank preprint servers and journals by the authors' priorities and AI policies, and edit the prose under a check that no claim got stronger and no number or citation changed. Ends with the corrected version as track changes and an offline dashboard of what the run found.",
       "source": {
         "source": "github",
         "repo": "dna-seq/manuscript-skills"
